@@ -1,0 +1,141 @@
+<!-- FILE_ID: WIN-001 | FILE_PATH: ScreenSplitt/MainWindow.xaml -->
+<ui:UiWindow
+    x:Class="ScreenSplitt.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:ScreenSplitt.Controls"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="Screen Splitt"
+    Width="1200"
+    Height="800"
+    MinWidth="400"
+    MinHeight="300"
+    WindowStyle="None"
+    AllowsTransparency="True"
+    Background="Transparent"
+    WindowStartupLocation="CenterScreen"
+    ExtendsContentIntoTitleBar="False">
+
+    <Border
+        x:Name="WindowBorder"
+        CornerRadius="8"
+        BorderBrush="{DynamicResource SystemControlForegroundChromeHighBrush}"
+        BorderThickness="1"
+        ClipToBounds="True"
+        Opacity="0.98">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="8" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="8" />
+            </Grid.ColumnDefinitions>
+
+            <!-- هدر سفارشی پنجره -->
+            <Grid
+                x:Name="TitleBar"
+                Grid.Row="0"
+                Grid.Column="1"
+                Background="Transparent"
+                MouseLeftButtonDown="TitleBar_OnMouseLeftButtonDown"
+                MouseDoubleClick="TitleBar_OnMouseDoubleClick">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!-- عنوان پنجره و دکمه‌های تغییر چیدمان -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="12 0 0 0" VerticalAlignment="Center">
+                    <ui:SymbolIcon Symbol="SplitH" FontSize="16" Margin="0 0 12 0" />
+                    <TextBlock Text="Screen Splitt" FontSize="13" Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}" Margin="0 0 12 0" />
+                    
+                    <!-- دکمه‌های تغییر حالت اسپلیت -->
+                    <ui:TitleBarButton x:Name="LayoutSingleButton" Click="LayoutSingleButton_OnClick" Icon="Square16" ToolTip="چیدمان تک پنجره" />
+                    <ui:TitleBarButton x:Name="LayoutVerticalButton" Click="LayoutVerticalButton_OnClick" Icon="SplitVertical16" ToolTip="دو قسمتی عمودی" />
+                    <ui:TitleBarButton x:Name="LayoutHorizontalButton" Click="LayoutHorizontalButton_OnClick" Icon="SplitHorizontal16" ToolTip="دو قسمتی افقی" />
+                    <ui:TitleBarButton x:Name="LayoutGridButton" Click="LayoutGridButton_OnClick" Icon="Grid24" ToolTip="چهار قسمتی" />
+                </StackPanel>
+
+                <!-- دکمه‌های مدیریت پنجره -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <ui:TitleBarButton x:Name="SettingsButton" Click="SettingsButton_OnClick" Icon="Settings16" ToolTip="تنظیمات" />
+                    <ui:TitleBarButton x:Name="AddWindowButton" Click="AddWindowButton_OnClick" Icon="Add16" ToolTip="اضافه کردن پنجره جدید" />
+                    <ui:TitleBarButton x:Name="MinimizeButton" Click="MinimizeButton_OnClick" Icon="WeatherMoon16" />
+                    <ui:TitleBarButton x:Name="MaximizeButton" Click="MaximizeButton_OnClick" Icon="Square16" />
+                    <ui:TitleBarButton x:Name="CloseButton" Click="CloseButton_OnClick" Icon="Dismiss12" />
+                </StackPanel>
+            </Grid>
+
+            <!-- محتوای اصلی پنجره -->
+            <Border Grid.Row="1" Grid.Column="1" Margin="1" Background="{DynamicResource SystemControlAltLowBrush}">
+                <Grid>
+                    <!-- پیام پیش‌فرض -->
+                    <StackPanel x:Name="EmptyStatePanel" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <ui:SymbolIcon Symbol="AppsAddIn24" FontSize="48" Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" HorizontalAlignment="Center" Margin="0 0 0 12" />
+                        <TextBlock Text="برای شروع چیدمان مورد نظر را از نوار بالا انتخاب کنید" FontSize="15" HorizontalAlignment="Center" Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" />
+                    </StackPanel>
+
+                    <!-- چیدمان تک پنجره -->
+                    <controls:HostedWindowContainer x:Name="Pane1" Visibility="Collapsed" Margin="1" />
+                    
+                    <!-- چیدمان عمودی دو قسمتی -->
+                    <controls:SplitPaneContainer x:Name="VerticalSplitContainer" IsVertical="True" Visibility="Collapsed">
+                        <controls:SplitPaneContainer.FirstPane>
+                            <controls:HostedWindowContainer x:Name="PaneVLeft" Margin="1" />
+                        </controls:SplitPaneContainer.FirstPane>
+                        <controls:SplitPaneContainer.SecondPane>
+                            <controls:HostedWindowContainer x:Name="PaneVRight" Margin="1" />
+                        </controls:SplitPaneContainer.SecondPane>
+                    </controls:SplitPaneContainer>
+                    
+                    <!-- چیدمان افقی دو قسمتی -->
+                    <controls:SplitPaneContainer x:Name="HorizontalSplitContainer" IsVertical="False" Visibility="Collapsed">
+                        <controls:SplitPaneContainer.FirstPane>
+                            <controls:HostedWindowContainer x:Name="PaneHTop" Margin="1" />
+                        </controls:SplitPaneContainer.FirstPane>
+                        <controls:SplitPaneContainer.SecondPane>
+                            <controls:HostedWindowContainer x:Name="PaneHBottom" Margin="1" />
+                        </controls:SplitPaneContainer.SecondPane>
+                    </controls:SplitPaneContainer>
+                    
+                    <!-- چیدمان چهار قسمتی -->
+                    <Grid x:Name="Grid4Container" Visibility="Collapsed">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <controls:HostedWindowContainer x:Name="PaneTopLeft" Grid.Row="0" Grid.Column="0" Margin="1" />
+                        <GridSplitter Grid.Row="0" Grid.Column="1" Width="6" ResizeBehavior="PreviousAndNext" Background="Transparent" Cursor="SizeWE" />
+                        <controls:HostedWindowContainer x:Name="PaneTopRight" Grid.Row="0" Grid.Column="2" Margin="1" />
+                        <GridSplitter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="6" HorizontalAlignment="Stretch" ResizeBehavior="PreviousAndNext" Background="Transparent" Cursor="SizeNS" />
+                        <controls:HostedWindowContainer x:Name="PaneBottomLeft" Grid.Row="2" Grid.Column="0" Margin="1" />
+                        <GridSplitter Grid.Row="2" Grid.Column="1" Width="6" ResizeBehavior="PreviousAndNext" Background="Transparent" Cursor="SizeWE" />
+                        <controls:HostedWindowContainer x:Name="PaneBottomRight" Grid.Row="2" Grid.Column="2" Margin="1" />
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!-- لایه‌های تغییر سایز پنجره از تمام 8 جهت -->
+            <controls:WindowResizer Grid.Row="1" Grid.Column="0" Width="8" ResizeDirection="10" />
+            <controls:WindowResizer Grid.Row="1" Grid.Column="2" Width="8" ResizeDirection="11" />
+            <controls:WindowResizer Grid.Row="0" Grid.Column="1" Height="4" ResizeDirection="12" />
+            <controls:WindowResizer Grid.Row="2" Grid.Column="1" Height="8" ResizeDirection="15" />
+            <controls:WindowResizer Grid.Row="0" Grid.Column="0" Width="8" Height="8" ResizeDirection="13" />
+            <controls:WindowResizer Grid.Row="0" Grid.Column="2" Width="8" Height="8" ResizeDirection="14" />
+            <controls:WindowResizer Grid.Row="2" Grid.Column="0" Width="8" Height="8" ResizeDirection="16" />
+            <controls:WindowResizer Grid.Row="2" Grid.Column="2" Width="8" Height="8" ResizeDirection="17" />
+        </Grid>
+    </Border>
+
+</ui:UiWindow>
