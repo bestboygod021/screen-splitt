@@ -35,7 +35,7 @@ public static class Win32Api
     // ثابت‌های استایل پنجره
     public const int GWL_STYLE = -16;
     public const int WS_CHILD = 0x40000000;
-    public const int WS_POPUP = 0x80000000;
+    public const int WS_POPUP = unchecked((int)0x80000000);
     public const int WS_CAPTION = 0x00C00000;
     public const int WS_THICKFRAME = 0x00040000;
     public const int WS_MINIMIZEBOX = 0x00020000;

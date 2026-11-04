@@ -52,15 +52,18 @@
                 Grid.Row="2"
                 Orientation="Horizontal"
                 HorizontalAlignment="Right">
-                <ui:Button
+                <Button
                     Content="انصراف"
-                    Appearance="Secondary"
                     Margin="0 0 8 0"
+                    Padding="16 6"
                     Click="CancelButton_OnClick" />
-                <ui:Button
+                <Button
                     x:Name="SelectButton"
                     Content="انتخاب"
-                    Appearance="Primary"
+                    Padding="16 6"
+                    Background="#0078D4"
+                    Foreground="White"
+                    BorderThickness="0"
                     Click="SelectButton_OnClick"
                     IsEnabled="False" />
             </StackPanel>

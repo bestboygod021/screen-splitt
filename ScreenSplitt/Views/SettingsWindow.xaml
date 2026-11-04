@@ -67,9 +67,12 @@
                 Orientation="Horizontal"
                 HorizontalAlignment="Right"
                 Margin="0 16 0 0">
-                <ui:Button
+                <Button
                     Content="بستن"
-                    Appearance="Primary"
+                    Padding="16 6"
+                    Background="#0078D4"
+                    Foreground="White"
+                    BorderThickness="0"
                     Click="CloseButton_OnClick" />
             </StackPanel>
         </Grid>
