@@ -29,7 +29,14 @@ public partial class MainWindow : UiWindow
         InitializeComponent();
         
         // اتصال رویداد دابل کلیک روی هدر برای بزرگ/کوچک کردن پنجره
-        TitleBar.MouseDoubleClick += TitleBar_OnMouseDoubleClick;
+        TitleBar.PreviewMouseLeftButtonDown += (s, e) =>
+        {
+            if (e.ClickCount == 2)
+            {
+                ToggleMaximize();
+                e.Handled = true;
+            }
+        };
 
         // فعال کردن حالت همیشه در بالا و تنظیمات اولیه
         Loaded += (s, e) =>
@@ -248,14 +255,6 @@ public partial class MainWindow : UiWindow
             Win32Api.SendMessage(new WindowInteropHelper(this).Handle, 
                 Win32Api.WM_NCLBUTTONDOWN, new IntPtr(Win32Api.HT_CAPTION), IntPtr.Zero);
         }
-    }
-
-    /// <summary>
-    /// بزرگ کردن/برگرداندن پنجره با دابل کلیک روی هدر
-    /// </summary>
-    private void TitleBar_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
-    {
-        ToggleMaximize();
     }
 
     /// <summary>

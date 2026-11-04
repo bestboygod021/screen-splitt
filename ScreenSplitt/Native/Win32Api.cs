@@ -94,8 +94,8 @@ public static class Win32Api
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool SetForegroundWindow(IntPtr hWnd);
     
-    public const uint WM_ACTIVATE = 0x0006;
-    public const IntPtr WA_ACTIVE = 1;
+    public const int WM_ACTIVATE = 0x0006;
+    public const IntPtr WA_ACTIVE = new IntPtr(1);
     
     [DllImport("user32.dll")]
     public static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
