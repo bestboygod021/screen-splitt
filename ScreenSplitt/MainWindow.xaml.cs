@@ -39,17 +39,15 @@ public partial class MainWindow : UiWindow
                 ThemeManager.Apply(ThemeType.Light);
             }
             
-            // فعال کردن افکت مدرن میکا برای ویندوز 11
+            // فعال کردن افکت مدرن میکا برای ویندوز 11 (فقط در WPF-UI 2.x)
             try
             {
-                WindowBackgroundManager.Apply(
-                    this,
-                    WindowBackgroundManager.BackdropType.Mica,
-                    true);
+                var backdrop = new WindowBackdrop(this, Wpf.Ui.Appearance.BackdropType.Mica);
+                backdrop.Apply();
             }
             catch
             {
-                // اگر سیستم‌عامل از میکا پشتیبانی نمی‌کند، چشم پوشی کن
+                // اگر سیستم‌عامل از میکا پشتیبانی نمی‌کند یا نسخه کتابخانه متفاوت است، چشم پوشی کن
             }
             
             InitializePanesList();
