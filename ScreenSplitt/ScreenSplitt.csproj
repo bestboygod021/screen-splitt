@@ -1,0 +1,17 @@
+<!-- FILE_ID: PROJ-001 | FILE_PATH: ScreenSplitt/ScreenSplitt.csproj -->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon />
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WPF-UI" Version="3.0.5" />
+  </ItemGroup>
+
+</Project>
