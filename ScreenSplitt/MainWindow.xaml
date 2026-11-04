@@ -23,6 +23,40 @@
         BorderThickness="1"
         ClipToBounds="True"
         Opacity="0.98">
+        <Border.Resources>
+            <!-- استایل سفارشی دکمه‌های هدر، سازگار با تمام نسخه‌ها -->
+            <Style x:Key="HeaderButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Foreground" Value="{DynamicResource SystemControlForegroundBaseHighBrush}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Bd" Background="{TemplateBinding Background}" Padding="8">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="{DynamicResource SystemControlHighlightListLowBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="Bd" Property="Background" Value="{DynamicResource SystemControlHighlightListMediumBrush}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <!-- استایل مخصوص دکمه بستن -->
+            <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource HeaderButtonStyle}">
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#C42B1C" />
+                        <Setter Property="Foreground" Value="White" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Resources>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
@@ -53,35 +87,35 @@
                     <TextBlock Text="Screen Splitt" FontSize="13" Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}" Margin="0 0 12 0" />
                     
                     <!-- دکمه‌های تغییر حالت اسپلیت -->
-                    <Button x:Name="LayoutSingleButton" Click="LayoutSingleButton_OnClick" ToolTip="چیدمان تک پنجره" Style="{DynamicResource TitleBarButtonStyle}" Width="40" Height="32">
+                    <Button x:Name="LayoutSingleButton" Click="LayoutSingleButton_OnClick" ToolTip="چیدمان تک پنجره" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
                         <ui:SymbolIcon Symbol="Square16" FontSize="12" />
                     </Button>
-                    <Button x:Name="LayoutVerticalButton" Click="LayoutVerticalButton_OnClick" ToolTip="دو قسمتی عمودی" Style="{DynamicResource TitleBarButtonStyle}" Width="40" Height="32">
+                    <Button x:Name="LayoutVerticalButton" Click="LayoutVerticalButton_OnClick" ToolTip="دو قسمتی عمودی" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
                         <ui:SymbolIcon Symbol="SplitVertical16" FontSize="12" />
                     </Button>
-                    <Button x:Name="LayoutHorizontalButton" Click="LayoutHorizontalButton_OnClick" ToolTip="دو قسمتی افقی" Style="{DynamicResource TitleBarButtonStyle}" Width="40" Height="32">
+                    <Button x:Name="LayoutHorizontalButton" Click="LayoutHorizontalButton_OnClick" ToolTip="دو قسمتی افقی" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
                         <ui:SymbolIcon Symbol="SplitHorizontal16" FontSize="12" />
                     </Button>
-                    <Button x:Name="LayoutGridButton" Click="LayoutGridButton_OnClick" ToolTip="چهار قسمتی" Style="{DynamicResource TitleBarButtonStyle}" Width="40" Height="32">
+                    <Button x:Name="LayoutGridButton" Click="LayoutGridButton_OnClick" ToolTip="چهار قسمتی" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
                         <ui:SymbolIcon Symbol="Grid24" FontSize="12" />
                     </Button>
                 </StackPanel>
 
                 <!-- دکمه‌های مدیریت پنجره -->
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="SettingsButton" Click="SettingsButton_OnClick" ToolTip="تنظیمات" Style="{DynamicResource TitleBarButtonStyle}" Width="40" Height="32">
+                    <Button x:Name="SettingsButton" Click="SettingsButton_OnClick" ToolTip="تنظیمات" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
                         <ui:SymbolIcon Symbol="Settings16" FontSize="12" />
                     </Button>
-                    <Button x:Name="AddWindowButton" Click="AddWindowButton_OnClick" ToolTip="اضافه کردن پنجره جدید" Style="{DynamicResource TitleBarButtonStyle}" Width="40" Height="32">
+                    <Button x:Name="AddWindowButton" Click="AddWindowButton_OnClick" ToolTip="اضافه کردن پنجره جدید" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
                         <ui:SymbolIcon Symbol="Add16" FontSize="12" />
                     </Button>
-                    <Button x:Name="MinimizeButton" Click="MinimizeButton_OnClick" Style="{DynamicResource TitleBarButtonStyle}" Width="40" Height="32">
+                    <Button x:Name="MinimizeButton" Click="MinimizeButton_OnClick" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
                         <ui:SymbolIcon Symbol="WeatherMoon16" FontSize="12" />
                     </Button>
-                    <Button x:Name="MaximizeButton" Click="MaximizeButton_OnClick" Style="{DynamicResource TitleBarButtonStyle}" Width="40" Height="32">
+                    <Button x:Name="MaximizeButton" Click="MaximizeButton_OnClick" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
                         <ui:SymbolIcon x:Name="MaximizeIcon" Symbol="Square16" FontSize="12" />
                     </Button>
-                    <Button x:Name="CloseButton" Click="CloseButton_OnClick" Style="{DynamicResource WindowCloseButtonStyle}" Width="40" Height="32">
+                    <Button x:Name="CloseButton" Click="CloseButton_OnClick" Style="{StaticResource CloseButtonStyle}" Width="40" Height="32">
                         <ui:SymbolIcon Symbol="Dismiss12" FontSize="12" />
                     </Button>
                 </StackPanel>

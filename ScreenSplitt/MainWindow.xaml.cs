@@ -7,6 +7,7 @@ using System.Windows.Interop;
 using ScreenSplitt.Controls;
 using ScreenSplitt.Models;
 using ScreenSplitt.Native;
+using ScreenSplitt.Services;
 using ScreenSplitt.Views;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
@@ -42,24 +43,17 @@ public partial class MainWindow : UiWindow
                 Theme.Apply(ThemeType.Light);
             }
             
-            // فعال کردن افکت مدرن اکریلیک/میکا
+            // افکت پس‌زمینه نیمه شفاف
             try
             {
-                // سازگاری با تمام نسخه‌های WPF-UI 2.x
-                Wpf.Ui.Appearance.Background.Apply(this, Wpf.Ui.Appearance.BackgroundType.Mica);
-            }
-            catch
-            {
-                try
+                this.AllowsTransparency = false;
+                var backgroundColor = this.FindResource("SystemControlChromeMediumLowBrush") as System.Windows.Media.SolidColorBrush;
+                if (backgroundColor != null)
                 {
-                    var backgroundColor = this.FindResource("SystemControlChromeMediumLowBrush") as System.Windows.Media.SolidColorBrush;
-                    if (backgroundColor != null)
-                    {
-                        this.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(240, backgroundColor.Color.R, backgroundColor.Color.G, backgroundColor.Color.B));
-                    }
+                    this.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(250, backgroundColor.Color.R, backgroundColor.Color.G, backgroundColor.Color.B));
                 }
-                catch { }
             }
+            catch { }
             
             InitializePanesList();
             ApplyLayout((LayoutType)_settingsService.Settings.LastUsedLayout);
