@@ -11,8 +11,8 @@
     MinWidth="400"
     MinHeight="300"
     WindowStyle="None"
-    AllowsTransparency="True"
-    Background="Transparent"
+    AllowsTransparency="False"
+    Background="#202020"
     WindowStartupLocation="CenterScreen"
     ExtendsContentIntoTitleBar="False">
 
