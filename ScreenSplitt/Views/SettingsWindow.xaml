@@ -5,21 +5,26 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="تنظیمات Screen Splitt"
-    Width="450"
-    Height="320"
-    MinWidth="400"
-    MinHeight="280"
+    Width="480"
+    Height="350"
+    MinWidth="420"
+    MinHeight="300"
     WindowStartupLocation="CenterOwner"
     WindowStyle="None"
-    AllowsTransparency="True"
-    Background="Transparent"
+    AllowsTransparency="False"
+    Background="#0F172A"
     ResizeMode="NoResize">
 
-    <Border
-        CornerRadius="8"
-        BorderBrush="{DynamicResource SystemControlForegroundChromeHighBrush}"
-        BorderThickness="1"
-        Background="{DynamicResource SystemControlChromeMediumLowBrush}">
+    <Border CornerRadius="12" BorderThickness="1" ClipToBounds="True">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#1A1F3A" Offset="0" />
+                <GradientStop Color="#2D1B4E" Offset="1" />
+            </LinearGradientBrush>
+        </Border.Background>
+        <Border.BorderBrush>
+            <SolidColorBrush Color="#FFFFFF" Opacity="0.15" />
+        </Border.BorderBrush>
         <Grid Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -27,53 +32,47 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <TextBlock
-                Grid.Row="0"
-                Text="تنظیمات"
-                FontSize="20"
-                FontWeight="SemiBold"
-                Margin="0 0 16 0"
-                Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}" />
+            <TextBlock Grid.Row="0" Text="⚙ تنظیمات" FontSize="22" Foreground="White" FontWeight="Light" Margin="0 0 20 0" />
 
-            <StackPanel Grid.Row="1" Margin="0 8 0 0">
-                <!-- شروع خودکار -->
-                <ui:ToggleSwitch
-                    x:Name="AutoStartToggle"
-                    Content="شروع خودکار با ویندوز"
-                    Margin="0 0 0 16"
-                    Checked="AutoStartToggle_Checked"
-                    Unchecked="AutoStartToggle_Unchecked" />
+            <StackPanel Grid.Row="1" Margin="0 16 0 0">
+                <Border CornerRadius="8" Background="#08FFFFFF" Padding="12" Margin="0 0 0 12" BorderThickness="1" BorderBrush="#15FFFFFF">
+                    <StackPanel>
+                        <DockPanel Margin="0 0 0 12">
+                            <TextBlock Text="شروع خودکار با ویندوز" VerticalAlignment="Center" Foreground="White" FontSize="13" DockPanel.Dock="Left" />
+                            <ui:ToggleSwitch x:Name="AutoStartToggle" HorizontalAlignment="Right" DockPanel.Dock="Right" />
+                        </DockPanel>
+                        <Separator Opacity="0.2" />
+                        <DockPanel Margin="0 12 0 0">
+                            <TextBlock Text="حالت تاریک" VerticalAlignment="Center" Foreground="White" FontSize="13" DockPanel.Dock="Left" />
+                            <ui:ToggleSwitch x:Name="DarkThemeToggle" IsChecked="True" HorizontalAlignment="Right" DockPanel.Dock="Right" />
+                        </DockPanel>
+                    </StackPanel>
+                </Border>
 
-                <!-- تم تاریک -->
-                <ui:ToggleSwitch
-                    x:Name="DarkThemeToggle"
-                    Content="استفاده از تم تاریک"
-                    IsChecked="True"
-                    Margin="0 0 0 16"
-                    Checked="DarkThemeToggle_Checked"
-                    Unchecked="DarkThemeToggle_Unchecked" />
-
-                <TextBlock
-                    Text="نسخه ۱.۰.۰"
-                    FontSize="12"
-                    Opacity="0.6"
-                    Margin="0 16 0 0"
-                    HorizontalAlignment="Center"
-                    Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" />
+                <TextBlock Text="✨ Screen Splitt Glass Edition v1.1" FontSize="11" Opacity="0.5" HorizontalAlignment="Center" Foreground="White" Margin="0 20 0 0" />
             </StackPanel>
 
-            <StackPanel
-                Grid.Row="2"
-                Orientation="Horizontal"
-                HorizontalAlignment="Right"
-                Margin="0 16 0 0">
-                <Button
-                    Content="بستن"
-                    Padding="16 6"
-                    Background="#0078D4"
-                    Foreground="White"
-                    BorderThickness="0"
-                    Click="CloseButton_OnClick" />
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="بستن" Padding="20 8" Click="CloseButton_OnClick" Foreground="White" Cursor="Hand" Margin="0 16 0 0">
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#6B5DD3" Offset="0" />
+                            <GradientStop Color="#EC4899" Offset="1" />
+                        </LinearGradientBrush>
+                    </Button.Background>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bd" Property="Opacity" Value="0.9" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
             </StackPanel>
         </Grid>
     </Border>
