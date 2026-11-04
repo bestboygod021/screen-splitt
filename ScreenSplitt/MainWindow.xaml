@@ -83,40 +83,40 @@
 
                 <!-- عنوان پنجره و دکمه‌های تغییر چیدمان -->
                 <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="12 0 0 0" VerticalAlignment="Center">
-                    <ui:SymbolIcon Symbol="SplitH" FontSize="16" Margin="0 0 12 0" />
+                    <TextBlock Text="▥" FontSize="16" Margin="0 0 12 0" />
                     <TextBlock Text="Screen Splitt" FontSize="13" Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}" Margin="0 0 12 0" />
                     
-                    <!-- دکمه‌های تغییر حالت اسپلیت -->
+                    <!-- دکمه‌های تغییر حالت اسپلیت (استفاده از کاراکترهای ساده به جای آیکون برای سازگاری کامل) -->
                     <Button x:Name="LayoutSingleButton" Click="LayoutSingleButton_OnClick" ToolTip="چیدمان تک پنجره" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
-                        <ui:SymbolIcon Symbol="Square16" FontSize="12" />
+                        <TextBlock Text="▢" FontSize="12" />
                     </Button>
                     <Button x:Name="LayoutVerticalButton" Click="LayoutVerticalButton_OnClick" ToolTip="دو قسمتی عمودی" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
-                        <ui:SymbolIcon Symbol="SplitVertical16" FontSize="12" />
+                        <TextBlock Text="▯|▯" FontSize="10" />
                     </Button>
                     <Button x:Name="LayoutHorizontalButton" Click="LayoutHorizontalButton_OnClick" ToolTip="دو قسمتی افقی" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
-                        <ui:SymbolIcon Symbol="SplitHorizontal16" FontSize="12" />
+                        <TextBlock Text="▯_▯" FontSize="10" />
                     </Button>
                     <Button x:Name="LayoutGridButton" Click="LayoutGridButton_OnClick" ToolTip="چهار قسمتی" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
-                        <ui:SymbolIcon Symbol="Grid24" FontSize="12" />
+                        <TextBlock Text="▦" FontSize="12" />
                     </Button>
                 </StackPanel>
 
                 <!-- دکمه‌های مدیریت پنجره -->
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button x:Name="SettingsButton" Click="SettingsButton_OnClick" ToolTip="تنظیمات" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
-                        <ui:SymbolIcon Symbol="Settings16" FontSize="12" />
+                        <TextBlock Text="⚙" FontSize="12" />
                     </Button>
                     <Button x:Name="AddWindowButton" Click="AddWindowButton_OnClick" ToolTip="اضافه کردن پنجره جدید" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
-                        <ui:SymbolIcon Symbol="Add16" FontSize="12" />
+                        <TextBlock Text="+" FontSize="16" FontWeight="Bold" />
                     </Button>
                     <Button x:Name="MinimizeButton" Click="MinimizeButton_OnClick" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
-                        <ui:SymbolIcon Symbol="WeatherMoon16" FontSize="12" />
+                        <TextBlock Text="—" FontSize="12" />
                     </Button>
                     <Button x:Name="MaximizeButton" Click="MaximizeButton_OnClick" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
-                        <ui:SymbolIcon x:Name="MaximizeIcon" Symbol="Square16" FontSize="12" />
+                        <TextBlock x:Name="MaximizeIcon" Text="▢" FontSize="12" />
                     </Button>
                     <Button x:Name="CloseButton" Click="CloseButton_OnClick" Style="{StaticResource CloseButtonStyle}" Width="40" Height="32">
-                        <ui:SymbolIcon Symbol="Dismiss12" FontSize="12" />
+                        <TextBlock Text="✕" FontSize="12" />
                     </Button>
                 </StackPanel>
             </Grid>
@@ -126,7 +126,7 @@
                 <Grid>
                     <!-- پیام پیش‌فرض -->
                     <StackPanel x:Name="EmptyStatePanel" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <ui:SymbolIcon Symbol="AppsAddIn24" FontSize="48" Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" HorizontalAlignment="Center" Margin="0 0 0 12" />
+                        <TextBlock Text="▢+" FontSize="48" Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" HorizontalAlignment="Center" Margin="0 0 0 12" />
                         <TextBlock Text="برای شروع چیدمان مورد نظر را از نوار بالا انتخاب کنید" FontSize="15" HorizontalAlignment="Center" Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" />
                     </StackPanel>
 

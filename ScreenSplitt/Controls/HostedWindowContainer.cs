@@ -137,14 +137,11 @@ public class HostedWindowContainer : Border
             HorizontalAlignment = HorizontalAlignment.Center
         };
         
-        var addIcon = new System.Windows.Shapes.Path
+        var addIcon = new TextBlock
         {
-            Width = 24,
-            Height = 24,
-            Data = Geometry.Parse("M12 4V20M20 12H4"),
-            Stroke = new SolidColorBrush(Color.FromArgb(120, 255, 255, 255)),
-            StrokeThickness = 2,
-            Stretch = Stretch.Uniform,
+            Text = "▢+",
+            FontSize = 32,
+            Foreground = new SolidColorBrush(Color.FromArgb(120, 255, 255, 255)),
             HorizontalAlignment = HorizontalAlignment.Center,
             Margin = new Thickness(0, 0, 0, 8)
         };
