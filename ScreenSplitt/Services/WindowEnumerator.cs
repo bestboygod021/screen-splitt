@@ -2,62 +2,81 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using ScreenSplitt.Models;
 using ScreenSplitt.Native;
 
 namespace ScreenSplitt.Services;
 
-/// <summary>
-/// سرویس لیست کردن تمام پنجره‌های قابل نمایش باز در سیستم
-/// </summary>
 public static class WindowEnumerator
 {
-    public static List<OpenWindowInfo> GetAllOpenWindows()
+    // لیست پردازه‌های مربوط به هر دسته‌بندی
+    private static readonly Dictionary<string, string[]> CategoryProcesses = new()
+    {
+        {"folder", new[] {"explorer"}},
+        {"note", new[] {"notepad", "notepad++", "winword", "wordpad", "onenote", "obsidian", "code", "vscode"}},
+        {"browser", new[] {"chrome", "msedge", "firefox", "opera", "brave", "iexplore", "safari"}},
+        {"photo", new[] {"ms-photos", "photos", "paint", "mspaint", "irfanview", "xnview", "photoshop", "discord", "zoom"}}
+    };
+
+    public static List<OpenWindowInfo> GetAllOpenWindows(string? categoryFilter = null)
     {
         var windows = new List<OpenWindowInfo>();
         var ownProcessId = (uint)Process.GetCurrentProcess().Id;
 
         Win32Api.EnumWindows((hWnd, lParam) =>
         {
-            // فقط پنجره‌های قابل مشاهده را در نظر بگیر
             if (!Win32Api.IsWindowVisible(hWnd))
                 return true;
 
-            // پنجره‌های بدون عنوان را رد کن
             int length = Win32Api.GetWindowTextLength(hWnd);
             if (length == 0)
                 return true;
 
-            // عنوان پنجره را بخوان
-            var stringBuilder = new StringBuilder(length + 1);
-            Win32Api.GetWindowText(hWnd, stringBuilder, stringBuilder.Capacity);
-            string title = stringBuilder.ToString().Trim();
-            
+            var sb = new StringBuilder(length + 1);
+            Win32Api.GetWindowText(hWnd, sb, sb.Capacity);
+            string title = sb.ToString().Trim();
+
             if (string.IsNullOrWhiteSpace(title))
                 return true;
 
-            // شناسه پردازه را دریافت کن
             Win32Api.GetWindowThreadProcessId(hWnd, out uint processId);
-            
-            // پنجره خود برنامه را از لیست حذف کن
+
             if (processId == ownProcessId)
                 return true;
 
-            // پنجره‌های سیستمی خاص که معمولا خالی هستند را رد کن
-            if (title == "Program Manager" || title == "Windows Input Experience")
+            if (title == "Program Manager" || title == "Windows Input Experience" || title == "Setup" || title == "Default IME")
                 return true;
 
-            windows.Add(new OpenWindowInfo
+            try
             {
-                Handle = hWnd,
-                Title = title,
-                ProcessId = processId
-            });
+                var proc = Process.GetProcessById((int)processId);
+                string procName = proc.ProcessName.ToLowerInvariant();
+
+                // اگر فیلتر دسته‌بندی داریم فقط پردازه‌های مربوطه را برگردان
+                if (categoryFilter != null && CategoryProcesses.ContainsKey(categoryFilter))
+                {
+                    if (!CategoryProcesses[categoryFilter].Contains(procName))
+                        return true;
+                }
+
+                windows.Add(new OpenWindowInfo
+                {
+                    Handle = hWnd,
+                    Title = title,
+                    ProcessId = processId,
+                    ProcessName = proc.ProcessName
+                });
+            }
+            catch
+            {
+                // در صورت عدم دسترسی به پردازه رد کن
+            }
 
             return true;
         }, IntPtr.Zero);
 
-        return windows;
+        return windows.OrderBy(w => w.ProcessName).ThenBy(w => w.Title).ToList();
     }
 }

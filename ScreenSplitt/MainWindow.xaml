@@ -5,61 +5,37 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:ScreenSplitt.Controls"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-    Title="Screen Splitt"
-    Width="1200"
-    Height="800"
-    MinWidth="400"
-    MinHeight="300"
+    Title="Screen Splitt - Glass Edition"
+    Width="1280"
+    Height="820"
+    MinWidth="600"
+    MinHeight="400"
     WindowStyle="None"
     AllowsTransparency="False"
-    Background="#202020"
-    WindowStartupLocation="CenterScreen"
-    ExtendsContentIntoTitleBar="False">
+    Background="#0F172A"
+    WindowStartupLocation="CenterScreen">
 
     <Border
         x:Name="WindowBorder"
-        CornerRadius="8"
-        BorderBrush="{DynamicResource SystemControlForegroundChromeHighBrush}"
+        CornerRadius="12"
         BorderThickness="1"
-        ClipToBounds="True"
-        Opacity="0.98">
-        <Border.Resources>
-            <!-- استایل سفارشی دکمه‌های هدر، سازگار با تمام نسخه‌ها -->
-            <Style x:Key="HeaderButtonStyle" TargetType="Button">
-                <Setter Property="Background" Value="Transparent" />
-                <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="Foreground" Value="{DynamicResource SystemControlForegroundBaseHighBrush}" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="Bd" Background="{TemplateBinding Background}" Padding="8">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="Bd" Property="Background" Value="{DynamicResource SystemControlHighlightListLowBrush}" />
-                                </Trigger>
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="Bd" Property="Background" Value="{DynamicResource SystemControlHighlightListMediumBrush}" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-            <!-- استایل مخصوص دکمه بستن -->
-            <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource HeaderButtonStyle}">
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="#C42B1C" />
-                        <Setter Property="Foreground" Value="White" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-        </Border.Resources>
+        ClipToBounds="True">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#1A1F3A" Offset="0" />
+                <GradientStop Color="#2D1B4E" Offset="0.5" />
+                <GradientStop Color="#1E293B" Offset="1" />
+            </LinearGradientBrush>
+        </Border.Background>
+        <Border.BorderBrush>
+            <SolidColorBrush Color="#FFFFFF" Opacity="0.15" />
+        </Border.BorderBrush>
+        <Border.Effect>
+            <DropShadowEffect Color="#6B5DD3" BlurRadius="30" ShadowDepth="0" Opacity="0.2" />
+        </Border.Effect>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="8" />
             </Grid.RowDefinitions>
@@ -69,124 +45,185 @@
                 <ColumnDefinition Width="8" />
             </Grid.ColumnDefinitions>
 
-            <!-- هدر سفارشی پنجره -->
-            <Grid
-                x:Name="TitleBar"
-                Grid.Row="0"
-                Grid.Column="1"
-                Background="Transparent"
-                MouseLeftButtonDown="TitleBar_OnMouseLeftButtonDown">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <!-- عنوان پنجره و دکمه‌های تغییر چیدمان -->
-                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="12 0 0 0" VerticalAlignment="Center">
-                    <TextBlock Text="▥" FontSize="16" Margin="0 0 12 0" />
-                    <TextBlock Text="Screen Splitt" FontSize="13" Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}" Margin="0 0 12 0" />
-                    
-                    <!-- دکمه‌های تغییر حالت اسپلیت (استفاده از کاراکترهای ساده به جای آیکون برای سازگاری کامل) -->
-                    <Button x:Name="LayoutSingleButton" Click="LayoutSingleButton_OnClick" ToolTip="چیدمان تک پنجره" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
-                        <TextBlock Text="▢" FontSize="12" />
-                    </Button>
-                    <Button x:Name="LayoutVerticalButton" Click="LayoutVerticalButton_OnClick" ToolTip="دو قسمتی عمودی" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
-                        <TextBlock Text="▯|▯" FontSize="10" />
-                    </Button>
-                    <Button x:Name="LayoutHorizontalButton" Click="LayoutHorizontalButton_OnClick" ToolTip="دو قسمتی افقی" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
-                        <TextBlock Text="▯_▯" FontSize="10" />
-                    </Button>
-                    <Button x:Name="LayoutGridButton" Click="LayoutGridButton_OnClick" ToolTip="چهار قسمتی" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
-                        <TextBlock Text="▦" FontSize="12" />
-                    </Button>
-                </StackPanel>
-
-                <!-- دکمه‌های مدیریت پنجره -->
-                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="SettingsButton" Click="SettingsButton_OnClick" ToolTip="تنظیمات" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
-                        <TextBlock Text="⚙" FontSize="12" />
-                    </Button>
-                    <Button x:Name="AddWindowButton" Click="AddWindowButton_OnClick" ToolTip="اضافه کردن پنجره جدید" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
-                        <TextBlock Text="+" FontSize="16" FontWeight="Bold" />
-                    </Button>
-                    <Button x:Name="MinimizeButton" Click="MinimizeButton_OnClick" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
-                        <TextBlock Text="—" FontSize="12" />
-                    </Button>
-                    <Button x:Name="MaximizeButton" Click="MaximizeButton_OnClick" Style="{StaticResource HeaderButtonStyle}" Width="40" Height="32">
-                        <TextBlock x:Name="MaximizeIcon" Text="▢" FontSize="12" />
-                    </Button>
-                    <Button x:Name="CloseButton" Click="CloseButton_OnClick" Style="{StaticResource CloseButtonStyle}" Width="40" Height="32">
-                        <TextBlock Text="✕" FontSize="12" />
-                    </Button>
-                </StackPanel>
-            </Grid>
-
-            <!-- محتوای اصلی پنجره -->
-            <Border Grid.Row="1" Grid.Column="1" Margin="1" Background="{DynamicResource SystemControlAltLowBrush}">
+            <!-- ========== هدر اصلی ========== -->
+            <Border Grid.Row="0" Grid.Column="1" Background="#15000000" Padding="8 6 0 6" MouseLeftButtonDown="TitleBar_OnMouseLeftButtonDown">
                 <Grid>
-                    <!-- پیام پیش‌فرض -->
-                    <StackPanel x:Name="EmptyStatePanel" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <TextBlock Text="▢+" FontSize="48" Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" HorizontalAlignment="Center" Margin="0 0 0 12" />
-                        <TextBlock Text="برای شروع چیدمان مورد نظر را از نوار بالا انتخاب کنید" FontSize="15" HorizontalAlignment="Center" Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" MinWidth="280" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- لوگو و عنوان -->
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="4 0 0 0">
+                        <Border Width="28" Height="28" CornerRadius="8">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#6B5DD3" Offset="0" />
+                                    <GradientStop Color="#EC4899" Offset="1" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <TextBlock Text="▥" Foreground="White" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <TextBlock Text="Screen Splitt" FontSize="14" Foreground="White" FontWeight="SemiBold" VerticalAlignment="Center" Margin="10 0 16 0" />
                     </StackPanel>
 
-                    <!-- چیدمان تک پنجره -->
-                    <controls:HostedWindowContainer x:Name="Pane1" Visibility="Collapsed" Margin="1" />
-                    
-                    <!-- چیدمان عمودی دو قسمتی -->
-                    <controls:SplitPaneContainer x:Name="VerticalSplitContainer" IsVertical="True" Visibility="Collapsed">
-                        <controls:SplitPaneContainer.FirstPane>
-                            <controls:HostedWindowContainer x:Name="PaneVLeft" Margin="1" />
-                        </controls:SplitPaneContainer.FirstPane>
-                        <controls:SplitPaneContainer.SecondPane>
-                            <controls:HostedWindowContainer x:Name="PaneVRight" Margin="1" />
-                        </controls:SplitPaneContainer.SecondPane>
-                    </controls:SplitPaneContainer>
-                    
-                    <!-- چیدمان افقی دو قسمتی -->
-                    <controls:SplitPaneContainer x:Name="HorizontalSplitContainer" IsVertical="False" Visibility="Collapsed">
-                        <controls:SplitPaneContainer.FirstPane>
-                            <controls:HostedWindowContainer x:Name="PaneHTop" Margin="1" />
-                        </controls:SplitPaneContainer.FirstPane>
-                        <controls:SplitPaneContainer.SecondPane>
-                            <controls:HostedWindowContainer x:Name="PaneHBottom" Margin="1" />
-                        </controls:SplitPaneContainer.SecondPane>
-                    </controls:SplitPaneContainer>
-                    
-                    <!-- چیدمان چهار قسمتی -->
-                    <Grid x:Name="Grid4Container" Visibility="Collapsed">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                    <!-- ========== دکمه‌های چیدمان ========== -->
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8 0">
+                        <Button Style="{StaticResource GlassButtonStyle}" x:Name="LayoutSingleButton" Click="LayoutSingleButton_OnClick" ToolTip="تک پنجره" Width="32" Height="32">
+                            <TextBlock Text="▢" FontSize="12" />
+                        </Button>
+                        <Button Style="{StaticResource GlassButtonStyle}" x:Name="LayoutVerticalButton" Click="LayoutVerticalButton_OnClick" ToolTip="دو قسمتی عمودی" Width="32" Height="32">
+                            <TextBlock Text="▯|▯" FontSize="10" />
+                        </Button>
+                        <Button Style="{StaticResource GlassButtonStyle}" x:Name="LayoutHorizontalButton" Click="LayoutHorizontalButton_OnClick" ToolTip="دو قسمتی افقی" Width="32" Height="32">
+                            <TextBlock Text="▤" FontSize="12" />
+                        </Button>
+                        <Button Style="{StaticResource GlassButtonStyle}" x:Name="LayoutGridButton" Click="LayoutGridButton_OnClick" ToolTip="چهار قسمتی" Width="32" Height="32">
+                            <TextBlock Text="▦" FontSize="12" />
+                        </Button>
+                        <Separator Margin="8 4" />
+                        <Button Style="{StaticResource GlassButtonStyle}" x:Name="AddWindowButton" Click="AddWindowButton_OnClick" ToolTip="اضافه کردن پنجره جدید" Width="32" Height="32">
+                            <TextBlock Text="+" FontSize="16" FontWeight="Bold" />
+                        </Button>
+                        <Button Style="{StaticResource GlassButtonStyle}" x:Name="SettingsButton" Click="SettingsButton_OnClick" ToolTip="تنظیمات" Width="32" Height="32">
+                            <TextBlock Text="⚙" FontSize="12" />
+                        </Button>
+                    </StackPanel>
 
-                        <controls:HostedWindowContainer x:Name="PaneTopLeft" Grid.Row="0" Grid.Column="0" Margin="1" />
-                        <GridSplitter Grid.Row="0" Grid.Column="1" Width="6" ResizeBehavior="PreviousAndNext" Background="Transparent" Cursor="SizeWE" />
-                        <controls:HostedWindowContainer x:Name="PaneTopRight" Grid.Row="0" Grid.Column="2" Margin="1" />
-                        <GridSplitter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="6" HorizontalAlignment="Stretch" ResizeBehavior="PreviousAndNext" Background="Transparent" Cursor="SizeNS" />
-                        <controls:HostedWindowContainer x:Name="PaneBottomLeft" Grid.Row="2" Grid.Column="0" Margin="1" />
-                        <GridSplitter Grid.Row="2" Grid.Column="1" Width="6" ResizeBehavior="PreviousAndNext" Background="Transparent" Cursor="SizeWE" />
-                        <controls:HostedWindowContainer x:Name="PaneBottomRight" Grid.Row="2" Grid.Column="2" Margin="1" />
-                    </Grid>
+                    <!-- ========== نوار دسته‌بندی (تب‌ها) ========== -->
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                        <RadioButton Style="{StaticResource CategoryTabStyle}" IsChecked="True" x:Name="TabFolders" Content="📁 فولدرها" Tag="folder" Checked="CategoryTab_Checked" />
+                        <RadioButton Style="{StaticResource CategoryTabStyle}" x:Name="TabNotes" Content="📝 یادداشت" Tag="note" Checked="CategoryTab_Checked" />
+                        <RadioButton Style="{StaticResource CategoryTabStyle}" x:Name="TabBrowser" Content="🌐 مرورگر" Tag="browser" Checked="CategoryTab_Checked" />
+                        <RadioButton Style="{StaticResource CategoryTabStyle}" x:Name="TabPhotos" Content="🖼️ عکس" Tag="photo" Checked="CategoryTab_Checked" />
+                    </StackPanel>
+
+                    <!-- ========== دکمه‌های مدیریت پنجره ========== -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.ColumnSpan="3" Margin="0 0 -4 0">
+                        <Button x:Name="MinimizeButton" Click="MinimizeButton_OnClick" Width="36" Height="32" Background="Transparent" BorderThickness="0" Cursor="Hand">
+                            <TextBlock Text="—" FontSize="10" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Button>
+                        <Button x:Name="MaximizeButton" Click="MaximizeButton_OnClick" Width="36" Height="32" Background="Transparent" BorderThickness="0" Cursor="Hand">
+                            <TextBlock x:Name="MaximizeIcon" Text="▢" FontSize="12" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Button>
+                        <Button x:Name="CloseButton" Click="CloseButton_OnClick" Width="36" Height="32" Background="Transparent" BorderThickness="0" Cursor="Hand">
+                            <TextBlock Text="✕" FontSize="10" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border x:Name="Bd" Background="Transparent" CornerRadius="0">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Bd" Property="Background" Value="#C42B1C" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </StackPanel>
                 </Grid>
             </Border>
 
-            <!-- لایه‌های تغییر سایز پنجره از تمام 8 جهت -->
+            <!-- ========== محتوای اصلی ========== -->
+            <Border Grid.Row="1" Grid.Column="1" Margin="8">
+                <Border CornerRadius="10" Background="#08FFFFFF" BorderThickness="1" BorderBrush="#15FFFFFF">
+                    <Grid Margin="4">
+                        <!-- پیام خوش‌آمدگویی -->
+                        <StackPanel x:Name="EmptyStatePanel" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Border Width="100" Height="100" CornerRadius="30" Margin="0 0 0 20">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#406B5DD3" Offset="0" />
+                                        <GradientStop Color="#40EC4899" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border.Effect>
+                                    <BlurEffect Radius="20" />
+                                </Border.Effect>
+                                <TextBlock Text="▢+" FontSize="48" Foreground="#99FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <TextBlock Text="به Screen Splitt خوش آمدید" FontSize="20" Foreground="White" FontWeight="Light" HorizontalAlignment="Center" />
+                            <TextBlock Text="برای شروع، از دسته‌بندی بالا نوع فایل را انتخاب کنید" FontSize="13" Foreground="#80FFFFFF" HorizontalAlignment="Center" Margin="0 8 0 0" />
+                            <Button x:Name="StartAddButton" Content="اضافه کردن اولین پنجره" Click="AddWindowButton_OnClick" Margin="0 24 0 0" Padding="20 10" FontSize="13" Cursor="Hand" Foreground="White">
+                                <Button.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="#6B5DD3" Offset="0" />
+                                        <GradientStop Color="#EC4899" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Button.Background>
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="12" Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Bd" Property="Opacity" Value="0.9" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </StackPanel>
+
+                        <!-- چیدمان‌ها -->
+                        <controls:HostedWindowContainer x:Name="Pane1" Visibility="Collapsed" Margin="4" />
+                        <controls:SplitPaneContainer x:Name="VerticalSplitContainer" IsVertical="True" Visibility="Collapsed">
+                            <controls:SplitPaneContainer.FirstPane>
+                                <controls:HostedWindowContainer x:Name="PaneVLeft" Margin="4" />
+                            </controls:SplitPaneContainer.FirstPane>
+                            <controls:SplitPaneContainer.SecondPane>
+                                <controls:HostedWindowContainer x:Name="PaneVRight" Margin="4" />
+                            </controls:SplitPaneContainer.SecondPane>
+                        </controls:SplitPaneContainer>
+                        <controls:SplitPaneContainer x:Name="HorizontalSplitContainer" IsVertical="False" Visibility="Collapsed">
+                            <controls:SplitPaneContainer.FirstPane>
+                                <controls:HostedWindowContainer x:Name="PaneHTop" Margin="4" />
+                            </controls:SplitPaneContainer.FirstPane>
+                            <controls:SplitPaneContainer.SecondPane>
+                                <controls:HostedWindowContainer x:Name="PaneHBottom" Margin="4" />
+                            </controls:SplitPaneContainer.SecondPane>
+                        </controls:SplitPaneContainer>
+                        <Grid x:Name="Grid4Container" Visibility="Collapsed">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <controls:HostedWindowContainer x:Name="PaneTopLeft" Grid.Row="0" Grid.Column="0" Margin="4" />
+                            <GridSplitter Grid.Row="0" Grid.Column="1" Width="8" ResizeBehavior="PreviousAndNext" Background="Transparent" Cursor="SizeWE" />
+                            <controls:HostedWindowContainer x:Name="PaneTopRight" Grid.Row="0" Grid.Column="2" Margin="4" />
+                            <GridSplitter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="8" HorizontalAlignment="Stretch" ResizeBehavior="PreviousAndNext" Background="Transparent" Cursor="SizeNS" />
+                            <controls:HostedWindowContainer x:Name="PaneBottomLeft" Grid.Row="2" Grid.Column="0" Margin="4" />
+                            <GridSplitter Grid.Row="2" Grid.Column="1" Width="8" ResizeBehavior="PreviousAndNext" Background="Transparent" Cursor="SizeWE" />
+                            <controls:HostedWindowContainer x:Name="PaneBottomRight" Grid.Row="2" Grid.Column="2" Margin="4" />
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Border>
+
+            <!-- لایه‌های تغییر سایز -->
             <controls:WindowResizer Grid.Row="1" Grid.Column="0" Width="8" ResizeDirection="10" />
             <controls:WindowResizer Grid.Row="1" Grid.Column="2" Width="8" ResizeDirection="11" />
-            <controls:WindowResizer Grid.Row="0" Grid.Column="1" Height="4" ResizeDirection="12" />
-            <controls:WindowResizer Grid.Row="2" Grid.Column="1" Height="8" ResizeDirection="15" />
             <controls:WindowResizer Grid.Row="0" Grid.Column="0" Width="8" Height="8" ResizeDirection="13" />
             <controls:WindowResizer Grid.Row="0" Grid.Column="2" Width="8" Height="8" ResizeDirection="14" />
+            <controls:WindowResizer Grid.Row="2" Grid.Column="1" Height="8" ResizeDirection="15" />
             <controls:WindowResizer Grid.Row="2" Grid.Column="0" Width="8" Height="8" ResizeDirection="16" />
             <controls:WindowResizer Grid.Row="2" Grid.Column="2" Width="8" Height="8" ResizeDirection="17" />
+            <controls:WindowResizer Grid.Row="0" Grid.Column="1" Height="6" ResizeDirection="12" />
         </Grid>
     </Border>
-
 </ui:UiWindow>

@@ -9,24 +9,32 @@ namespace ScreenSplitt.Views;
 public partial class SelectWindowDialog : UiWindow
 {
     public OpenWindowInfo? SelectedWindow { get; private set; }
+    
+    /// <summary>
+    /// فیلتر دسته‌بندی برای نمایش فقط پنجره‌های مربوطه
+    /// </summary>
+    public string? CurrentCategoryFilter { get; set; }
 
     public SelectWindowDialog()
     {
         InitializeComponent();
-        LoadWindowsList();
         WindowsListBox.SelectionChanged += (s, e) =>
         {
             SelectButton.IsEnabled = WindowsListBox.SelectedItem != null;
         };
+        LoadWindowsList();
     }
 
-    /// <summary>
-    /// بارگذاری لیست پنجره‌های باز
-    /// </summary>
     private void LoadWindowsList()
     {
-        var windows = WindowEnumerator.GetAllOpenWindows();
+        var windows = WindowEnumerator.GetAllOpenWindows(CurrentCategoryFilter);
         WindowsListBox.ItemsSource = windows;
+
+        if (windows.Count == 0)
+        {
+            WindowsListBox.Items.Add("هیچ پنجره‌ای در این دسته‌بندی یافت نشد!");
+            WindowsListBox.IsEnabled = false;
+        }
     }
 
     private void SelectButton_OnClick(object sender, RoutedEventArgs e)
