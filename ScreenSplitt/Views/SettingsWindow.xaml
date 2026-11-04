@@ -39,17 +39,19 @@
                 <!-- شروع خودکار -->
                 <ui:ToggleSwitch
                     x:Name="AutoStartToggle"
-                    Header="شروع خودکار با ویندوز"
+                    Content="شروع خودکار با ویندوز"
                     Margin="0 0 0 16"
-                    IsOnChanged="AutoStartToggle_OnIsOnChanged" />
+                    Checked="AutoStartToggle_Checked"
+                    Unchecked="AutoStartToggle_Unchecked" />
 
                 <!-- تم تاریک -->
                 <ui:ToggleSwitch
                     x:Name="DarkThemeToggle"
-                    Header="استفاده از تم تاریک"
+                    Content="استفاده از تم تاریک"
                     IsChecked="True"
                     Margin="0 0 0 16"
-                    IsOnChanged="DarkThemeToggle_OnIsOnChanged" />
+                    Checked="DarkThemeToggle_Checked"
+                    Unchecked="DarkThemeToggle_Unchecked" />
 
                 <TextBlock
                     Text="نسخه ۱.۰.۰"

@@ -9,6 +9,7 @@ namespace ScreenSplitt.Views;
 public partial class SettingsWindow : UiWindow
 {
     private readonly SettingsService _settingsService;
+    private bool _initializing = true;
 
     public SettingsWindow(SettingsService settingsService)
     {
@@ -16,22 +17,37 @@ public partial class SettingsWindow : UiWindow
         InitializeComponent();
         
         // مقداردهی اولیه سویچ‌ها بر اساس تنظیمات ذخیره شده
-        AutoStartToggle.IsOn = _settingsService.IsAutoStartEnabled();
-        DarkThemeToggle.IsOn = _settingsService.Settings.UseDarkTheme;
+        AutoStartToggle.IsChecked = _settingsService.IsAutoStartEnabled();
+        DarkThemeToggle.IsChecked = _settingsService.Settings.UseDarkTheme;
+        _initializing = false;
     }
 
-    private void AutoStartToggle_OnIsOnChanged(object sender, RoutedEventArgs e)
+    private void AutoStartToggle_Checked(object sender, RoutedEventArgs e)
     {
-        _settingsService.SetAutoStart(AutoStartToggle.IsOn);
+        if (_initializing) return;
+        _settingsService.SetAutoStart(true);
     }
 
-    private void DarkThemeToggle_OnIsOnChanged(object sender, RoutedEventArgs e)
+    private void AutoStartToggle_Unchecked(object sender, RoutedEventArgs e)
     {
-        _settingsService.Settings.UseDarkTheme = DarkThemeToggle.IsOn;
+        if (_initializing) return;
+        _settingsService.SetAutoStart(false);
+    }
+
+    private void DarkThemeToggle_Checked(object sender, RoutedEventArgs e)
+    {
+        if (_initializing) return;
+        _settingsService.Settings.UseDarkTheme = true;
         _settingsService.SaveSettings();
-        
-        // اعمال تم فوری
-        ThemeManager.Apply(DarkThemeToggle.IsOn ? ThemeType.Dark : ThemeType.Light);
+        Theme.Apply(ThemeType.Dark);
+    }
+
+    private void DarkThemeToggle_Unchecked(object sender, RoutedEventArgs e)
+    {
+        if (_initializing) return;
+        _settingsService.Settings.UseDarkTheme = false;
+        _settingsService.SaveSettings();
+        Theme.Apply(ThemeType.Light);
     }
 
     private void CloseButton_OnClick(object sender, RoutedEventArgs e)

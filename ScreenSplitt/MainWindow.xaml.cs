@@ -36,18 +36,26 @@ public partial class MainWindow : UiWindow
             // اعمال تم ذخیره شده
             if (!_settingsService.Settings.UseDarkTheme)
             {
-                ThemeManager.Apply(ThemeType.Light);
+                Theme.Apply(ThemeType.Light);
             }
             
-            // فعال کردن افکت مدرن میکا برای ویندوز 11 (فقط در WPF-UI 2.x)
+            // فعال کردن افکت مدرن اکریلیک/میکا
             try
             {
-                var backdrop = new WindowBackdrop(this, Wpf.Ui.Appearance.BackdropType.Mica);
-                backdrop.Apply();
+                // سازگاری با تمام نسخه‌های WPF-UI 2.x
+                Wpf.Ui.Appearance.Background.Apply(this, Wpf.Ui.Appearance.BackgroundType.Mica);
             }
             catch
             {
-                // اگر سیستم‌عامل از میکا پشتیبانی نمی‌کند یا نسخه کتابخانه متفاوت است، چشم پوشی کن
+                try
+                {
+                    var backgroundColor = this.FindResource("SystemControlChromeMediumLowBrush") as System.Windows.Media.SolidColorBrush;
+                    if (backgroundColor != null)
+                    {
+                        this.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(240, backgroundColor.Color.R, backgroundColor.Color.G, backgroundColor.Color.B));
+                    }
+                }
+                catch { }
             }
             
             InitializePanesList();
