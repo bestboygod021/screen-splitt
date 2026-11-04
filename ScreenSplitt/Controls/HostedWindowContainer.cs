@@ -152,8 +152,8 @@ public class HostedWindowContainer : Border
         {
             Content = "اضافه کردن پنجره",
             HorizontalAlignment = HorizontalAlignment.Center,
-            Style = (Style)FindResource("UiButtonSecondary") ?? Application.Current?.FindResource("UiButton"),
-            Opacity = 0.8
+            Padding = new Thickness(16, 6, 16, 6),
+            Opacity = 0.9
         };
         addButton.Click += (s, e) => AddWindowRequested?.Invoke(this, new RoutedEventArgs());
         
