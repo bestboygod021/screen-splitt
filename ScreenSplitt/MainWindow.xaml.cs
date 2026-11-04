@@ -26,6 +26,9 @@ public partial class MainWindow : UiWindow
     public MainWindow()
     {
         InitializeComponent();
+        
+        // اتصال رویداد دابل کلیک روی هدر برای بزرگ/کوچک کردن پنجره
+        TitleBar.MouseDoubleClick += TitleBar_OnMouseDoubleClick;
 
         // فعال کردن حالت همیشه در بالا و تنظیمات اولیه
         Loaded += (s, e) =>

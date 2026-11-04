@@ -41,8 +41,7 @@
                 Grid.Row="0"
                 Grid.Column="1"
                 Background="Transparent"
-                MouseLeftButtonDown="TitleBar_OnMouseLeftButtonDown"
-                MouseDoubleClick="TitleBar_OnMouseDoubleClick">
+                MouseLeftButtonDown="TitleBar_OnMouseLeftButtonDown">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
