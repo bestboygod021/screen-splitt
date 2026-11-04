@@ -292,7 +292,7 @@ public partial class MainWindow : UiWindow
             WindowBorder.CornerRadius = new CornerRadius(8);
             WindowBorder.BorderThickness = new Thickness(1);
             _isMaximized = false;
-            MaximizeIcon.Symbol = Wpf.Ui.Common.SymbolRegular.Square16;
+            MaximizeIcon.Text = "▢";
         }
         else
         {
@@ -300,7 +300,7 @@ public partial class MainWindow : UiWindow
             WindowBorder.CornerRadius = new CornerRadius(0);
             WindowBorder.BorderThickness = new Thickness(0);
             _isMaximized = true;
-            MaximizeIcon.Symbol = Wpf.Ui.Common.SymbolRegular.SquareMultiple16;
+            MaximizeIcon.Text = "▣";
         }
     }
 }
