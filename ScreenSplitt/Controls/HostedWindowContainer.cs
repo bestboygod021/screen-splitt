@@ -65,10 +65,10 @@ public class HostedWindowContainer : Border
 
     public HostedWindowContainer()
     {
-        Background = new SolidColorBrush(Color.FromArgb(15, 128, 128, 128));
-        BorderBrush = new SolidColorBrush(Color.FromArgb(30, 128, 128, 128));
+        Background = new SolidColorBrush(Color.FromArgb(05, 255, 255, 255));
+        BorderBrush = new SolidColorBrush(Color.FromArgb(20, 255, 255, 255));
         BorderThickness = new Thickness(1);
-        CornerRadius = new CornerRadius(4);
+        CornerRadius = new CornerRadius(8);
         ClipToBounds = true;
         
         _rootGrid = new Grid();
@@ -78,10 +78,11 @@ public class HostedWindowContainer : Border
         // هدر اختصاصی پنل
         _paneHeader = new Border
         {
-            Background = new SolidColorBrush(Color.FromArgb(20, 0, 0, 0)),
+            Background = new SolidColorBrush(Color.FromArgb(40, 107, 93, 211)),
             VerticalAlignment = VerticalAlignment.Top,
             Height = PaneHeaderHeight,
-            Padding = new Thickness(8, 0, 4, 0),
+            Padding = new Thickness(10, 0, 6, 0),
+            CornerRadius = new CornerRadius(8,8,0,0),
             Visibility = Visibility.Collapsed
         };
 

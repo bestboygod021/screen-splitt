@@ -8,8 +8,8 @@
     Title="Screen Splitt - Glass Edition"
     Width="1280"
     Height="820"
-    MinWidth="600"
-    MinHeight="400"
+    MinWidth="680"
+    MinHeight="420"
     WindowStyle="None"
     AllowsTransparency="False"
     Background="#0F172A"
@@ -44,14 +44,18 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="8" />
             </Grid.ColumnDefinitions>
+            <Grid.Clip>
+                <RectangleGeometry Rect="0,0,1280,820" RadiusX="12" RadiusY="12" x:Name="BorderClip" />
+            </Grid.Clip>
 
             <!-- ========== هدر اصلی ========== -->
             <Border Grid.Row="0" Grid.Column="1" Background="#15000000" Padding="8 6 0 6" MouseLeftButtonDown="TitleBar_OnMouseLeftButtonDown">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" MinWidth="280" />
+                        <ColumnDefinition Width="*" MinWidth="120" />
+                        <ColumnDefinition Width="*" MinWidth="150" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
                     <!-- لوگو و عنوان -->
@@ -92,15 +96,15 @@
                     </StackPanel>
 
                     <!-- ========== نوار دسته‌بندی (تب‌ها) ========== -->
-                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <WrapPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="4 0">
                         <RadioButton Style="{StaticResource CategoryTabStyle}" IsChecked="True" x:Name="TabFolders" Content="📁 فولدرها" Tag="folder" Checked="CategoryTab_Checked" />
                         <RadioButton Style="{StaticResource CategoryTabStyle}" x:Name="TabNotes" Content="📝 یادداشت" Tag="note" Checked="CategoryTab_Checked" />
                         <RadioButton Style="{StaticResource CategoryTabStyle}" x:Name="TabBrowser" Content="🌐 مرورگر" Tag="browser" Checked="CategoryTab_Checked" />
                         <RadioButton Style="{StaticResource CategoryTabStyle}" x:Name="TabPhotos" Content="🖼️ عکس" Tag="photo" Checked="CategoryTab_Checked" />
-                    </StackPanel>
+                    </WrapPanel>
 
                     <!-- ========== دکمه‌های مدیریت پنجره ========== -->
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.ColumnSpan="3" Margin="0 0 -4 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="3" Margin="0 0 -4 0">
                         <Button x:Name="MinimizeButton" Click="MinimizeButton_OnClick" Width="36" Height="32" Background="Transparent" BorderThickness="0" Cursor="Hand">
                             <TextBlock Text="—" FontSize="10" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Button>
@@ -204,26 +208,23 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <controls:HostedWindowContainer x:Name="PaneTopLeft" Grid.Row="0" Grid.Column="0" Margin="4" />
-                            <GridSplitter Grid.Row="0" Grid.Column="1" Width="8" ResizeBehavior="PreviousAndNext" Background="Transparent" Cursor="SizeWE" />
+                            <GridSplitter Grid.Row="0" Grid.Column="1" Width="8" ResizeBehavior="PreviousAndNext" Background="#15FFFFFF" Cursor="SizeWE" />
                             <controls:HostedWindowContainer x:Name="PaneTopRight" Grid.Row="0" Grid.Column="2" Margin="4" />
-                            <GridSplitter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="8" HorizontalAlignment="Stretch" ResizeBehavior="PreviousAndNext" Background="Transparent" Cursor="SizeNS" />
+                            <GridSplitter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="8" HorizontalAlignment="Stretch" ResizeBehavior="PreviousAndNext" Background="#15FFFFFF" Cursor="SizeNS" />
                             <controls:HostedWindowContainer x:Name="PaneBottomLeft" Grid.Row="2" Grid.Column="0" Margin="4" />
-                            <GridSplitter Grid.Row="2" Grid.Column="1" Width="8" ResizeBehavior="PreviousAndNext" Background="Transparent" Cursor="SizeWE" />
+                            <GridSplitter Grid.Row="2" Grid.Column="1" Width="8" ResizeBehavior="PreviousAndNext" Background="#15FFFFFF" Cursor="SizeWE" />
                             <controls:HostedWindowContainer x:Name="PaneBottomRight" Grid.Row="2" Grid.Column="2" Margin="4" />
                         </Grid>
                     </Grid>
                 </Border>
             </Border>
 
-            <!-- لایه‌های تغییر سایز -->
+            <!-- لایه‌های تغییر سایز (بدون تداخل با نوار هدر) -->
             <controls:WindowResizer Grid.Row="1" Grid.Column="0" Width="8" ResizeDirection="10" />
             <controls:WindowResizer Grid.Row="1" Grid.Column="2" Width="8" ResizeDirection="11" />
-            <controls:WindowResizer Grid.Row="0" Grid.Column="0" Width="8" Height="8" ResizeDirection="13" />
-            <controls:WindowResizer Grid.Row="0" Grid.Column="2" Width="8" Height="8" ResizeDirection="14" />
             <controls:WindowResizer Grid.Row="2" Grid.Column="1" Height="8" ResizeDirection="15" />
             <controls:WindowResizer Grid.Row="2" Grid.Column="0" Width="8" Height="8" ResizeDirection="16" />
             <controls:WindowResizer Grid.Row="2" Grid.Column="2" Width="8" Height="8" ResizeDirection="17" />
-            <controls:WindowResizer Grid.Row="0" Grid.Column="1" Height="6" ResizeDirection="12" />
         </Grid>
     </Border>
 </ui:UiWindow>
