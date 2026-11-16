@@ -91,7 +91,7 @@ public class SplitPaneContainer : Grid
             _splitter = new GridSplitter
             {
                 Width = 6,
-                Background = Brushes.Transparent,
+                Background = new SolidColorBrush(Color.FromArgb(15,255,255,255)),
                 Cursor = Cursors.SizeWE,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 VerticalAlignment = VerticalAlignment.Stretch
@@ -124,7 +124,7 @@ public class SplitPaneContainer : Grid
             _splitter = new GridSplitter
             {
                 Height = 6,
-                Background = Brushes.Transparent,
+                Background = new SolidColorBrush(Color.FromArgb(15,255,255,255)),
                 Cursor = Cursors.SizeNS,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 VerticalAlignment = VerticalAlignment.Stretch,

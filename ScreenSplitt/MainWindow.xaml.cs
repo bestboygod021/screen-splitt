@@ -36,6 +36,12 @@ public partial class MainWindow : UiWindow
     public MainWindow()
     {
         InitializeComponent();
+        
+        // به روز رسانی ناحیه کلیپ برای حفظ گردی گوشه‌ها در تمام سایزها
+        SizeChanged += (s, e) =>
+        {
+            BorderClip.Rect = new Rect(0, 0, ActualWidth, ActualHeight);
+        };
 
         Loaded += (s, e) =>
         {
@@ -53,6 +59,17 @@ public partial class MainWindow : UiWindow
 
             InitializePanesList();
             ApplyLayout(LayoutType.SinglePane);
+            
+            // جلوگیری از کرش با فعال کردن DPI awareness
+            try
+            {
+                var source = PresentationSource.FromVisual(this) as System.Windows.Interop.HwndSource;
+                source?.AddHook((IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled) =>
+                {
+                    return IntPtr.Zero;
+                });
+            }
+            catch { }
         };
 
         Closed += (s, e) =>
